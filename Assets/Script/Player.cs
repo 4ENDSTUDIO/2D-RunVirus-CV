@@ -17,9 +17,12 @@ public class Player : MonoBehaviour
     public float maxHoldJumpTime = 0.4f;
     public float holdJumpTimer = 0.0f;
     public float jumpGroundThreshold = 1;
+
+
+    private Animator anim;
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -31,6 +34,8 @@ public class Player : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
+                anim.SetBool("Jump", true);
+
                 isGrouded = false;
                 velocity.y = jumpVelocity;
                 isHoldingJump = true;
@@ -40,7 +45,13 @@ public class Player : MonoBehaviour
         }
         if(Input.GetKeyUp(KeyCode.Space))
         {
+            anim.SetBool("Jump", true);
             isHoldingJump = false;
+        }
+
+        if(isGrouded == true)
+        {
+            anim.SetBool("Jump", false);
         }
         
     }
@@ -84,6 +95,10 @@ public class Player : MonoBehaviour
                 velocity.x = maxXVelocity;
             }
         }
+
+       
+
+
        
 
         transform.position = pos;
